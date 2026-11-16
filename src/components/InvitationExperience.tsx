@@ -275,7 +275,7 @@ export default function InvitationExperience({
                 transition={{ delay: 0.5, duration: 0.7 }}
               >
                 <p className="mb-5 w-full max-w-md px-2 text-sm leading-relaxed text-[#77766f] md:max-w-xl md:px-4 md:text-base">
-                  Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Kaka/Adek
+                  Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu, Om/Tante, Kakak/Adik, serta seluruh kerabat
                   untuk hadir dalam acara keluarga kami.
                 </p>
 

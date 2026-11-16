@@ -7,10 +7,10 @@ export const invitation = {
   age: 2,
 
   // Tanggal dan waktu acara
-  eventDate: "2026-11-21T14:00:00+08:00",
+  eventDate: "2026-11-22T14:00:00+08:00",
 
   // Jam acara
-  eventTime: "13.00 WITA - Selesai",
+  eventTime: "08.30 WITA - Selesai",
 
   // Nama tempat
   locationName: "Kediaman Orang Tua Azka",

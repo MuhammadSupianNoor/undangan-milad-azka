@@ -54,7 +54,7 @@ export default function Home() {
 
         <p className="mx-auto mt-5 max-w-lg text-sm leading-7 text-gray-600">
           Merupakan kebahagiaan bagi kami apabila
-          keluarga berkenan hadir dan berbagi
+          Bapak/Ibu, Om/Tante, Kakak/Adik berkenan hadir dan berbagi
           kebahagiaan dalam syukuran milad Azka.
         </p>
       </section>

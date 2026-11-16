@@ -3,27 +3,27 @@ import { Clock, CalendarDays } from "lucide-react";
 
 const agenda = [
   {
-    time: "13.00 WITA",
+    time: "08.30 WITA",
     title: "Kedatangan Keluarga",
     description: "Menyambut keluarga yang hadir.",
   },
   {
-    time: "13.15 WITA",
+    time: "08.45 WITA",
     title: "Pembukaan",
     description: "Acara dibuka dengan doa bersama.",
   },
   {
-    time: "13.30 WITA",
+    time: "09.00 WITA",
     title: "Syukuran Milad Azka",
     description: "Doa dan ungkapan syukur atas bertambahnya usia Azka.",
   },
   {
-    time: "14.00 WITA",
+    time: "09.30 WITA",
     title: "Makan Bersama",
     description: "Menikmati hidangan dan berkumpul bersama keluarga.",
   },
   {
-    time: "16.00 WITA",
+    time: "11.30 WITA",
     title: "Penutup",
     description: "Sesi foto dan ramah tamah keluarga.",
   },

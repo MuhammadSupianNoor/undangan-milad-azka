@@ -24,6 +24,8 @@ declare global {
   }
 }
 
+const COMMENTS_PER_PAGE = 5;
+
 const wait = (ms: number) =>
   new Promise((resolve) => window.setTimeout(resolve, ms));
 
@@ -35,6 +37,51 @@ export default function Guestbook() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+
+  // State pagination
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Hitung jumlah halaman
+  const totalPages = Math.max(
+    1,
+    Math.ceil(comments.length / COMMENTS_PER_PAGE)
+  );
+
+  // Tentukan komentar yang ditampilkan pada halaman aktif
+  const startIndex = (currentPage - 1) * COMMENTS_PER_PAGE;
+
+  const paginatedComments = comments.slice(
+    startIndex,
+    startIndex + COMMENTS_PER_PAGE
+  );
+
+  const displayStart =
+    comments.length === 0 ? 0 : startIndex + 1;
+
+  const displayEnd = Math.min(
+    startIndex + COMMENTS_PER_PAGE,
+    comments.length
+  );
+
+  // Batasi nomor halaman yang tampil maksimal 5 tombol
+  const pageWindowStart = Math.min(
+    Math.max(currentPage - 2, 1),
+    Math.max(totalPages - 4, 1)
+  );
+
+  const visiblePages = Array.from(
+    {
+      length: Math.min(totalPages, 5),
+    },
+    (_, index) => pageWindowStart + index
+  );
+
+  // Jika jumlah komentar berkurang, pastikan halaman tetap valid
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
 
   const loadComments = useCallback((): Promise<Comment[]> => {
     return new Promise((resolve, reject) => {
@@ -49,35 +96,35 @@ export default function Guestbook() {
       const oldScript = document.getElementById(
         "azka-guestbook-script"
       );
+
       oldScript?.remove();
 
       let finished = false;
 
-     const finish = (callback: () => void) => {
-  if (finished) return;
-  finished = true;
-
-  window.clearTimeout(timeout);
-  script.remove();
-
-  // Jangan biarkan callback menjadi undefined.
-  // Respons JSONP yang terlambat tidak akan menyebabkan TypeError.
-  window.azkaGuestbookCallback = () => {};
-
-  setLoading(false);
-  callback();
-};
-
       const script = document.createElement("script");
       script.id = "azka-guestbook-script";
 
+      const finish = (callback: () => void) => {
+        if (finished) return;
+
+        finished = true;
+
+        window.clearTimeout(timeout);
+        script.remove();
+
+        // Abaikan callback JSONP yang terlambat
+        window.azkaGuestbookCallback = () => {};
+
+        setLoading(false);
+        callback();
+      };
+
       const timeout = window.setTimeout(() => {
-  finish(() => {
-    // Abaikan timeout agar tidak mengganggu tampilan undangan.
-    // Ucapan yang sudah berhasil dimuat tetap ditampilkan.
-    resolve(comments);
-  });
-}, 15000);
+        finish(() => {
+          // Abaikan timeout agar tidak mengganggu tampilan undangan
+          resolve(comments);
+        });
+      }, 15000);
 
       window.azkaGuestbookCallback = (data) => {
         if (!data || !data.success) {
@@ -85,9 +132,11 @@ export default function Guestbook() {
             const err = new Error(
               data?.message || "Gagal memuat ucapan."
             );
+
             setError(err.message);
             reject(err);
           });
+
           return;
         }
 
@@ -112,6 +161,7 @@ export default function Guestbook() {
           const err = new Error(
             "Tidak dapat mengambil data ucapan. Periksa URL Apps Script."
           );
+
           setError(err.message);
           reject(err);
         });
@@ -126,6 +176,7 @@ export default function Guestbook() {
 
     return () => {
       window.azkaGuestbookCallback = undefined;
+
       document
         .getElementById("azka-guestbook-script")
         ?.remove();
@@ -136,6 +187,7 @@ export default function Guestbook() {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+
     setError("");
     setNotice("");
 
@@ -183,9 +235,11 @@ export default function Guestbook() {
 
     Object.entries(fields).forEach(([key, value]) => {
       const input = document.createElement("input");
+
       input.type = "hidden";
       input.name = key;
       input.value = value;
+
       form.appendChild(input);
     });
 
@@ -195,8 +249,7 @@ export default function Guestbook() {
     try {
       form.submit();
 
-      // Beri kesempatan Apps Script menyimpan data.
-      // Kemudian periksa kembali daftar dari Spreadsheet.
+      // Beri kesempatan Apps Script menyimpan data
       let saved = false;
 
       for (let attempt = 0; attempt < 3; attempt++) {
@@ -213,13 +266,17 @@ export default function Guestbook() {
 
           if (saved) break;
         } catch {
-          // Coba membaca kembali pada percobaan berikutnya.
+          // Coba membaca kembali pada percobaan berikutnya
         }
       }
 
       if (saved) {
         setName("");
         setMessage("");
+
+        // Kembali ke halaman pertama agar ucapan terbaru terlihat
+        setCurrentPage(1);
+
         setNotice(
           "Alhamdulillah, ucapan Anda berhasil tersimpan. Terima kasih atas doa untuk Azka."
         );
@@ -237,6 +294,12 @@ export default function Guestbook() {
       iframe.remove();
       setSubmitting(false);
     }
+  };
+
+  // Muat ulang dan kembali ke halaman pertama
+  const handleRefresh = () => {
+    setCurrentPage(1);
+    loadComments().catch(() => {});
   };
 
   return (
@@ -362,7 +425,7 @@ export default function Guestbook() {
 
             <button
               type="button"
-              onClick={() => loadComments().catch(() => {})}
+              onClick={handleRefresh}
               disabled={loading}
               aria-label="Muat ulang ucapan"
               className="flex items-center gap-2 rounded-full border border-[#e5dfd1] px-3 py-2 text-xs text-[#71876e] transition hover:bg-white"
@@ -408,9 +471,9 @@ export default function Guestbook() {
 
             {!loading &&
               !error &&
-              comments.map((comment, index) => (
+              paginatedComments.map((comment, index) => (
                 <article
-                  key={`${comment.date}-${index}`}
+                  key={`${comment.date}-${startIndex + index}`}
                   className="rounded-2xl border border-[#e5dfd1] bg-white p-5 shadow-sm"
                 >
                   <div className="flex items-start gap-3">
@@ -440,6 +503,61 @@ export default function Guestbook() {
                 </article>
               ))}
           </div>
+
+          {/* Informasi jumlah komentar yang sedang ditampilkan */}
+          {!loading && !error && comments.length > 0 && (
+            <p className="mt-5 text-center text-xs text-[#99958b]">
+              Menampilkan {displayStart}–{displayEnd} dari{" "}
+              {comments.length} ucapan
+            </p>
+          )}
+
+          {/* Navigasi pagination */}
+          {!loading && !error && totalPages > 1 && (
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() =>
+                  setCurrentPage((page) => Math.max(1, page - 1))
+                }
+                disabled={currentPage === 1}
+                className="rounded-full border border-[#e5dfd1] px-4 py-2 text-xs text-[#71876e] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Sebelumnya
+              </button>
+
+              {visiblePages.map((page) => (
+                <button
+                  key={page}
+                  type="button"
+                  onClick={() => setCurrentPage(page)}
+                  aria-current={
+                    currentPage === page ? "page" : undefined
+                  }
+                  className={`flex h-9 min-w-9 items-center justify-center rounded-full border px-3 text-xs transition ${
+                    currentPage === page
+                      ? "border-[#879b83] bg-[#879b83] font-semibold text-white"
+                      : "border-[#e5dfd1] text-[#71876e] hover:bg-white"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                onClick={() =>
+                  setCurrentPage((page) =>
+                    Math.min(totalPages, page + 1)
+                  )
+                }
+                disabled={currentPage === totalPages}
+                className="rounded-full border border-[#e5dfd1] px-4 py-2 text-xs text-[#71876e] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Berikutnya
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

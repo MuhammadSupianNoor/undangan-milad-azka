@@ -70,10 +70,10 @@ export default function Hero() {
           </p>
 
           <h1 className="mt-3 font-serif text-5xl text-[#596b56] sm:text-6xl">
-            Azka
+            Muhammad Atharrazka Elzein
           </h1>
 
-          <p className="mt-3 text-sm tracking-[0.35em] text-[#879b83]">
+          <p className="mt-3 text-lg tracking-[0.35em] text-[#879b83]">
             KE-2 TAHUN
           </p>
 
@@ -85,8 +85,8 @@ export default function Hero() {
 
           <p className="mx-auto max-w-sm text-sm leading-7 text-gray-600">
             Dengan penuh rasa syukur, kami mengundang
-            Bapak/Ibu/Kaka/Adek untuk hadir dalam acara silaturahmi
-            sekaligus syukuran milad putra kami tercinta.
+            Bapak/Ibu, Om/Tante, Kakak/Adik, serta seluruh kerabat untuk hadir dalam acara silaturahmi
+            keluarga sekaligus syukuran milad putra kami tercinta.
           </p>
 
         </div>
