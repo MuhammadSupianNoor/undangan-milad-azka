@@ -43,7 +43,7 @@ export default function Hero() {
           <div className="relative h-full w-full overflow-hidden rounded-[160px_160px_30px_30px] border-[5px] border-white shadow-xl">
 
             <Image
-              src="/images/azka-cover.jpeg"
+              src="/images/azka-cover1.jpg"
               alt="Foto Azka dalam undangan milad kedua"
               fill
               priority
@@ -85,7 +85,7 @@ export default function Hero() {
 
           <p className="mx-auto max-w-sm text-sm leading-7 text-gray-600">
             Dengan penuh rasa syukur, kami mengundang
-            keluarga untuk hadir dalam acara silaturahmi
+            Bapak/Ibu/Kaka/Adek untuk hadir dalam acara silaturahmi
             sekaligus syukuran milad putra kami tercinta.
           </p>
 

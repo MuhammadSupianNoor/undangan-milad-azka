@@ -10,10 +10,10 @@ export const invitation = {
   eventDate: "2026-11-21T14:00:00+08:00",
 
   // Jam acara
-  eventTime: "14.00 WITA - Selesai",
+  eventTime: "13.00 WITA - Selesai",
 
   // Nama tempat
-  locationName: "Kediaman Keluarga Azka",
+  locationName: "Kediaman Orang TuaAzka",
 
   // Alamat lengkap
   address:

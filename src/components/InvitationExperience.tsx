@@ -82,7 +82,7 @@ export default function InvitationExperience({
       {/* Musik latar */}
       <audio
         ref={audioRef}
-        src="/audio/backsound.mp3"
+        src="/audio/backsound2.mp3"
         loop
         preload="auto"
         onPlay={() => setIsPlaying(true)}
@@ -128,7 +128,7 @@ export default function InvitationExperience({
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-[#f1ede3] px-5"
+            className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto overflow-x-hidden bg-[#f1ede3] px-5 py-8"
           >
             {/* Dekorasi latar */}
             <div className="pointer-events-none absolute inset-0">
@@ -136,7 +136,7 @@ export default function InvitationExperience({
               <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#e6d8bd]/60 blur-3xl" />
             </div>
 
-            <div className="relative z-10 flex w-full max-w-md flex-col items-center text-center">
+            <div className="relative z-10 my-auto flex w-full max-w-md flex-col items-center text-center md:max-w-xl">
 
               {/* Judul */}
               <motion.div
@@ -274,8 +274,8 @@ export default function InvitationExperience({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.7 }}
               >
-                <p className="mb-5 text-sm text-[#77766f]">
-                  Dengan penuh kebahagiaan, kami mengundang Anda
+                <p className="mb-5 w-full max-w-md px-2 text-sm leading-relaxed text-[#77766f] md:max-w-xl md:px-4 md:text-base">
+                  Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Kaka/Adek
                   untuk hadir dalam acara keluarga kami.
                 </p>
 

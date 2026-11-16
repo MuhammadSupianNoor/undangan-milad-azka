@@ -49,7 +49,7 @@ export default function MusicPlayer({
     <>
       <audio
         ref={audioRef}
-        src="/audio/backsound.mp3"
+        src="/audio/backsound2.mp3"
         loop
         preload="auto"
         onPlay={() => setIsPlaying(true)}

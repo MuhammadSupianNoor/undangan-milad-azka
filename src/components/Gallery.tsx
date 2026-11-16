@@ -12,9 +12,9 @@ import {
 } from "lucide-react";
 
 const photos = [
-  "/images/azka-1.jpg",
-  "/images/azka-2.jpg",
-  "/images/azka-3.jpg",
+  "/images/azka-11.jpeg",
+  "/images/azka-22.jpeg",
+  "/images/azka-33.png",
   "/images/azka-4.jpg",
   "/images/azka-5.jpg",
 ];
