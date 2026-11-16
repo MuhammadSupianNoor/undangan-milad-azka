@@ -13,7 +13,7 @@ export const invitation = {
   eventTime: "13.00 WITA - Selesai",
 
   // Nama tempat
-  locationName: "Kediaman Orang TuaAzka",
+  locationName: "Kediaman Orang Tua Azka",
 
   // Alamat lengkap
   address:
